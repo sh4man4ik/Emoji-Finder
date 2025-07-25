@@ -1,0 +1,73 @@
+.input-search-emoji {
+	display: flex;
+	justify-content: center;
+}
+
+.input-text {
+	border: 0;
+	outline: none;
+	font-size: clamp(20px, 5vw, 32px);
+	font-weight: normal;
+	background-color: #f0f0f0;
+	padding-left: 15px;
+	width: 100%;
+	border-bottom-right-radius: 7px;
+	border-top-right-radius: 7px;
+}
+
+.search-emoji-button {
+	border: 0;
+	font-size: clamp(20px, 5vw, 32px);
+	background-color: #f0f0f0;
+	padding-top: 5px;
+	padding-left: 15px;
+	width: auto;
+	border-bottom-left-radius: 7px;
+	border-top-left-radius: 7px;
+}
+@media (max-width: 300px) {
+	.search-emoji-button {
+		padding-left: 10px;
+	}
+}
+
+.search-emojis {
+	border: 0;
+	display: flex;
+	background-color: #f0f0f0;
+	border-bottom-left-radius: 7px;
+	border-top-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border-top-right-radius: 7px;
+	width: 70%;
+	max-width: 600px;
+}
+
+.random-emoji-button {
+	font-size: clamp(20px, 6vw, 32px);
+	background-color: #f0f0f0;
+	border: 0;
+	border-radius: 7px;
+	max-width: 60px;
+	width: 15%;
+	aspect-ratio: 1 / 1;
+	margin-left: 10px;
+}
+
+.random-emoji-button:hover {
+	background-color: #e3e3e3;
+}
+
+/*Mobile*/
+@media (max-width: 1023px) {
+	.input-search-emoji {
+		margin-top: 50px;
+	}
+}
+
+/*PC*/
+@media (min-width: 1024px) {
+	.input-search-emoji {
+		margin-top: 60px;
+	}
+}
