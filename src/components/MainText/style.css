@@ -1,0 +1,25 @@
+.main-text {
+	width: 100%;
+	text-align: center;
+	margin-top: 60px;
+}
+
+.main-small-title {
+	color: #797979;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+/*Mobile*/
+@media (max-width: 1023px) {
+	.main-text {
+		margin-top: 30px;
+	}
+}
+
+/*PC*/
+@media (min-width: 1024px) {
+	.main-text {
+		margin-top: 60px;
+	}
+}
