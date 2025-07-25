@@ -1,0 +1,47 @@
+.footer-title {
+	text-align: center;
+}
+
+.emoji-list {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.emoji-list-2 {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0px 2% 30px 2%;
+	max-width: 1100px;
+	justify-content: center;
+}
+
+.emoji-block {
+	margin: 10px;
+	padding: 8px 6px 1px 6px;
+	border: 3px solid #f0f0f0;
+	border-radius: 7px;
+	max-width: 120px;
+	width: auto;
+	aspect-ratio: 1 / 1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: clamp(34px, 8.5vw, 64px);
+	background-color: white;
+}
+
+/*Mobile*/
+@media (max-width: 1023px) {
+	.footer-title {
+		margin-top: 80px;
+	}
+}
+
+/*PC*/
+@media (min-width: 1024px) {
+	.footer-title {
+		margin-top: 150px;
+	}
+}
