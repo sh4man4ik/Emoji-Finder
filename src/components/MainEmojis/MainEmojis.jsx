@@ -1,119 +1,109 @@
-/* eslint-disable no-undef */
 import './main-emojis.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 function MainEmojis() {
-	let searchEmojis = useRef();
-	let inputText = useRef();
-	let emojisArray = useRef();
-	let copied = useRef();
+	let inputSearchEmoji = useRef();
+	let userInputElement = useRef();
+	let copiedElement = useRef();
+	let [filteredEmojisArray, setFilteredEmojis] = useState([]);
 
 	function outlineAdd() {
-		searchEmojis.current.style.outline = '2px solid #c0c0c0';
+		inputSearchEmoji.current.style.outline = '2px solid #c0c0c0';
 	}
-
 	function removeOutline() {
-		searchEmojis.current.style.outline = 'none';
+		inputSearchEmoji.current.style.outline = 'none';
 	}
 
-	function searchEmoji(inputRandom) {
-		let inputUserText = inputText.current.value.trim();
-		inputText.current.value = '';
+	function sendEmoji(inputRandom) {
+		let userInputText = userInputElement.current.value.trim();
+		userInputElement.current.value = '';
 
 		inputRandom == 'secret-key-for-random-emoji-123456'
-			? (inputUserText = 'secret-key-for-random-emoji-123456')
-			: inputUserText;
+			? (userInputText = 'secret-key-for-random-emoji-123456')
+			: userInputText;
 
-		if (inputUserText != '') {
+		if (userInputText != '') {
+			// eslint-disable-next-line no-undef
 			$.ajax({
 				type: 'POST',
 				url: 'api/send',
 				contentType: 'application/json',
-				data: JSON.stringify({ message: inputUserText }),
+				data: JSON.stringify({ message: userInputText }),
 				success: function (response) {
-					workWithResponse(response);
-					$('#serverResponse').text('Success: ' + response);
+					handleResponse(response);
 				},
-				error: function (xhr, error) {
+				error: function (error) {
 					console.error('Error: ', error);
-					$('#serverResponse').text('Error: ' + xhr.responseText);
 				}
 			});
 		}
 	}
 
-	function workWithResponse(response) {
-		emojisArray.current.innerHTML = '';
-
-		let emojis = response.results.map((item) => item.emoji);
-
+	function handleResponse(response) {
+		let responseEmojis = response.results.map((r) => r.emoji);
 		const emojiRegex = /\p{Emoji}/u;
 		const flagRegex = /^[\u{1F1E6}-\u{1F1FF}]{2}$/u;
 
-		for (let emoji of emojis) {
-			if (emojiRegex.test(emoji) && !flagRegex.test(emoji)) {
-				let newP = document.createElement('p');
-				newP.classList.add('display-3', 'emoji-block');
-				newP.innerHTML = emoji;
+		setFilteredEmojis(responseEmojis.filter((emoji) => emojiRegex.test(emoji) && !flagRegex.test(emoji)));
+	}
 
-				newP.addEventListener('click', () => {
-					navigator.clipboard.writeText(newP.textContent).then(() => {
-						animationCopied();
-					});
-				});
-
-				emojisArray.current.appendChild(newP);
-			}
-		}
+	function handleClick(emoji) {
+		navigator.clipboard.writeText(emoji).then(() => {
+			animationCopied();
+		});
 	}
 
 	function animationCopied() {
-		copied.current.style.display = 'block';
+		copiedElement.current.style.display = 'block';
+
 		setTimeout(() => {
-			copied.current.classList.add('show');
+			copiedElement.current.classList.add('show');
 		}, 10);
 
 		setTimeout(() => {
-			copied.current.classList.remove('show');
+			copiedElement.current.classList.remove('show');
 
 			setTimeout(() => {
-				copied.current.style.display = 'none';
+				copiedElement.current.style.display = 'none';
 			}, 250);
 		}, 1000);
 	}
 
 	return (
 		<>
-			<p className="copied" id="copied" ref={copied}>
+			<p className="copied" id="copied" ref={copiedElement}>
 				COPIED!
 			</p>
 
 			<div className="input-search-emoji">
-				<div className="search-emojis" ref={searchEmojis}>
-					<button className="search-emoji-button" onClick={searchEmoji}>
+				<div className="search-emojis" ref={inputSearchEmoji}>
+					<button className="search-emoji-button" onClick={sendEmoji}>
 						<i className="bi bi-search bg-transparent"></i>
 					</button>
 					<input
 						type="text"
 						className="input-text"
 						name="input-text"
-						ref={inputText}
-						placeholder="Enter emoji..."
+						ref={userInputElement}
+						placeholder="Search for emoji..."
 						maxLength="30"
 						onFocus={outlineAdd}
 						onBlur={removeOutline}
 					/>
 				</div>
-				<button
-					className="random-emoji-button"
-					onClick={() => searchEmoji('secret-key-for-random-emoji-123456')}
-				>
+				<button className="random-emoji-button" onClick={() => sendEmoji('secret-key-for-random-emoji-123456')}>
 					🎲
 				</button>
 			</div>
 
 			<div className="response-emojis">
-				<div className="response-emojis-2" id="response-emojis-2" ref={emojisArray}></div>
+				<div className="response-emojis-2" id="response-emojis-2">
+					{filteredEmojisArray.map((emoji, index) => (
+						<p className="emoji-block display-3" key={index} onClick={() => handleClick(emoji)}>
+							{emoji}
+						</p>
+					))}
+				</div>
 			</div>
 		</>
 	);

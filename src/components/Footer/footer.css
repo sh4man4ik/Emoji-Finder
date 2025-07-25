@@ -61,13 +61,13 @@
 /*Mobile*/
 @media (max-width: 1023px) {
 	.footer-title {
-		margin-top: 80px;
+		margin-top: 20px;
 	}
 }
 
 /*PC*/
 @media (min-width: 1024px) {
 	.footer-title {
-		margin-top: 150px;
+		margin-top: 98px;
 	}
 }
