@@ -1,4 +1,4 @@
-import './style.css';
+import './header.css';
 
 function Header() {
 	function githubRepoLocation() {
