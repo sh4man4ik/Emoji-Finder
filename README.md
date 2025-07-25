@@ -1,1 +1,1 @@
-# Emoji-Finder
+# EmojiFinder
