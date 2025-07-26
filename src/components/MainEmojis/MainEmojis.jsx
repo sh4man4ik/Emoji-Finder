@@ -26,7 +26,7 @@ function MainEmojis() {
 			// eslint-disable-next-line no-undef
 			$.ajax({
 				type: 'POST',
-				url: 'http://localhost:3001/send',
+				url: 'api/send',
 				contentType: 'application/json',
 				data: JSON.stringify({ message: userInputText }),
 				success: function (response) {
