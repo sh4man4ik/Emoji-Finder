@@ -1,8 +1,11 @@
 import express from 'express';
+import fetch from 'node-fetch';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/send', async function (request, response) {
 	let inputUserText = request.body.message;
@@ -11,7 +14,7 @@ app.post('/send', async function (request, response) {
 	response.send(randomEmojis);
 });
 
-app.listen(5172);
+app.listen(3001);
 
 async function getEmoji(inputUserText) {
 	let url;
