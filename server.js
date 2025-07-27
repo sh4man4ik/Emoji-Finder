@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post('/send', async function (request, response) {
+app.post('/api/send', async function (request, response) {
 	let inputUserText = request.body.message;
 	let randomEmojis = await getEmoji(inputUserText);
 
