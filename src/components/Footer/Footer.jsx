@@ -1,5 +1,5 @@
 import './footer.css';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 function Footer() {
 	let copied = useRef();

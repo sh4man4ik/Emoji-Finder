@@ -14,7 +14,7 @@ function MainEmojis() {
 		inputSearchEmoji.current.style.outline = 'none';
 	}
 
-	function sendEmoji(inputRandom) {
+	async function sendEmoji(inputRandom) {
 		let userInputText = userInputElement.current.value.trim();
 		userInputElement.current.value = '';
 
@@ -23,19 +23,21 @@ function MainEmojis() {
 			: userInputText;
 
 		if (userInputText != '') {
-			// eslint-disable-next-line no-undef
-			$.ajax({
-				type: 'POST',
-				url: 'http://localhost:3001/api/send',
-				contentType: 'application/json',
-				data: JSON.stringify({ message: userInputText }),
-				success: function (response) {
-					handleResponse(response);
-				},
-				error: function (error) {
-					console.error('Error: ', error);
+			try {
+				let response = await fetch('http://localhost:3001/api/send', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ message: userInputText })
+				});
+
+				if (response.ok) {
+					handleResponse(await response.json());
 				}
-			});
+			} catch (error) {
+				console.error('Error: ', error);
+			}
 		}
 	}
 
